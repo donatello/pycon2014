@@ -66,6 +66,7 @@ def handle_responses(t):
         else:
             # we got a command response
             cid, async_res = COMMANDS.popleft()
+            # wake up waiting command
             async_res.set((cid, resp))
 
 def commander(t, cid, cmd):
@@ -73,6 +74,7 @@ def commander(t, cid, cmd):
     with LOCK:
         COMMANDS.append((cid, async_res))
         send_command(t, cid, cmd)
+    # command sent to ESL - now block until response is got.
     _cid, resp = async_res.get()
     if cid != _cid:
         raise Exception('Commands out of sync!')
