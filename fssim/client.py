@@ -81,7 +81,8 @@ def commander(t, cid, cmd):
     return resp
 
 def command_func(t, start, count):
-    print('Greenlet {} {} started!'.format(start, count))
+    print('Greenlet with commands from {} to {} started!'.format(
+        start, start + count))
     for cid in range(start, start + count):
         cmd = 'CMD - {}\n'.format(cid)
         resp = commander(t, cid, cmd)
