@@ -59,7 +59,6 @@ def handle_event(data):
 def handle_responses(t):
     print('Starting responses handler')
     while True:
-        gevent.sleep(0)
         resp = read_response(t)
         if resp.startswith('Event:'):
             gevent.spawn(handle_event, resp)
